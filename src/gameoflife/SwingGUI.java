@@ -13,6 +13,7 @@ public class SwingGUI extends JPanel implements Renderer {
     String name;
     GameField field;
     int datax, datay;
+    JFrame f;
     
     @Override
     protected void paintComponent(Graphics g) {
@@ -56,10 +57,10 @@ public class SwingGUI extends JPanel implements Renderer {
     
     @Override
     public void drawField(GameField field) {
-        JFrame f = new JFrame("GUI: " + name);
+        f = new JFrame("GUI: " + name);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(height * 25, width * 25);
-        f.add(new SwingGUI(width, height, name));
+        f.setSize(height * 30, width * 30);
+        f.add(this);
         f.setVisible(true);
     }
 }

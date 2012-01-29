@@ -26,7 +26,7 @@ public class Main {
     
     public static GameField gliderField() {
         GameField f=new GameField(10, 10, "glider1");
-        f.aliveCells = new boolean[][] {
+        f.aliveCells = new boolean[][] { // this is a x-y-swapped glider
         {false,false,false,false,false,false,false,false,false,false},
         {false,false,false,false,false,false,false,false,false,false},
         {false,false,false,false,false,false,false,false,false,false},
