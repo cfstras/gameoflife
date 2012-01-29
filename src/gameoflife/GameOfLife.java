@@ -1,11 +1,12 @@
 package gameoflife;
 
+import static gameoflife.Tools.*;
 /**
  * This implements a "double-buffered" game of life ruleset.
  * @author claus
  */
 public class GameOfLife {
-    
+    static boolean endlessField=true;
     /**
      * This one applies one generation onto the supplied field,
      * saving the results into the generateTo field.
@@ -42,7 +43,7 @@ public class GameOfLife {
                 }
             }
         }
-        
+        generateTo.generation=currentField.generation+1;
         generateTo.lock.writeLock().unlock();
         currentField.lock.readLock().unlock();
     }
@@ -66,6 +67,10 @@ public class GameOfLife {
     }
     
     private static void addNeighbour(GameField f,int x,int y) {
+        if(endlessField) {
+            x=mod(x,f.width);
+            y=mod(y,f.height);
+        }
         if(x>=0 && x < f.width && y>=0 && y < f.height ) {
             if(f.aliveCells[x][y]) {
                 numNeighbours++;

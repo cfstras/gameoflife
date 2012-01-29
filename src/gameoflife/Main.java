@@ -1,5 +1,6 @@
 package gameoflife;
 
+import static gameoflife.Tools.*;
 /**
  *
  * @author claus
@@ -18,21 +19,22 @@ public class Main {
         //GameField life = new GameField(10, 10, "Leben");
         //life.insertRandomData();
         //life.printGameField();
+        test();
         mainLoop();
     }
     
     public static GameField gliderField() {
         GameField f=new GameField(10, 10, "glider1");
         f.aliveCells = new boolean[][] { // this is a x-y-swapped glider
-        {false,false,false,false,true,false,true,false,false,false},
-        {false,false,false,false,false,true,true,false,false,false},
         {false,false,false,false,false,false,false,false,false,false},
         {false,false,false,false,false,false,false,false,false,false},
-        {false,false,false,false,true ,false,true,true,false,false},
-        {false,false,true ,false,true ,false,false,true,false,false},
+        {false,false,false,false,false,false,false,false,false,false},
+        {false,false,false,false,false,false,false,false,false,false},
+        {false,false,false,false,true ,false,false,false,false,false},
+        {false,false,true ,false,true ,false,false,false,false,false},
         {false,false,false,true ,true ,false,false,false,false,false},
         {false,false,false,false,false,false,false,false,false,false},
-        {false,false,false,false,false,false,false,false,true,false},
+        {false,false,false,false,false,false,false,false,false,false},
         {false,false,false,false,false,false,false,false,false,false}
     };
         
@@ -40,7 +42,7 @@ public class Main {
     }
     
     public static void mainLoop() {
-        GameField current= new GameField(50, 50, "Random1");
+        GameField current= new GameField(50, 50, "Random1");//gliderField();
         GameField next=new GameField(50,50,"Random2");
         current.insertRandomData();
         SwingGUI gui = new SwingGUI(50,50,"GUI");
@@ -64,6 +66,16 @@ public class Main {
                 Thread.sleep(100);
             } catch (InterruptedException ex) {}
         }
+        
+    }
+    
+    public static void test() {
+        int x=-1,y=-1;
+        
+        x=mod(x,10);
+        y=mod(y,10);
+        System.out.println("x="+x+" y="+y);
+        
         
     }
     
