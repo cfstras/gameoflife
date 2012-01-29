@@ -12,9 +12,9 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        GameField life = new GameField(10, 10, "Leben");
+        GameField life = new GameField(50, 50, "Leben");
         life.insertRandomData();
-        SwingGUI gui = new SwingGUI(10,10,"GUI");
+        SwingGUI gui = new SwingGUI(50,50,"GUI");
         gui.init(life);
         gui.drawField(life);
 
