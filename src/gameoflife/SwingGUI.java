@@ -12,6 +12,7 @@ public class SwingGUI extends JPanel implements Renderer {
     String name;
     GameField field;
     JFrame f;
+    JLabel gen;
     
     @Override
     protected void paintComponent(Graphics g) {
@@ -52,8 +53,9 @@ public class SwingGUI extends JPanel implements Renderer {
         setPreferredSize(new Dimension(height * 10, width*10));
         invalidate();
         repaint();
-        
-        f.add(this);
+        f.setLayout(new BorderLayout(5,5));
+        f.add(this,BorderLayout.LINE_START);
+        f.add(new ControlGUI(),BorderLayout.LINE_END);
         f.pack();
         f.setVisible(true);
     }
