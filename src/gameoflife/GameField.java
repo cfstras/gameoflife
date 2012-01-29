@@ -16,6 +16,9 @@ public class GameField implements Serializable, Cloneable {
     boolean[][] aliveCells;
     final ReentrantReadWriteLock lock;
     Random random = new Random();
+    
+    char alive = '\u25A0';
+    char dead = '\u25A1';
 
     public GameField(int width, int height, String name, GameField template) {
         this.width = width;
@@ -69,15 +72,17 @@ public class GameField implements Serializable, Cloneable {
     public void printGameField() {
         lock.readLock().lock();
         try {
+            System.out.println("Printing " + name + " to System.out");
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     if (aliveCells[x][y]) {
-                        System.out.print("#");
+                        System.out.print(alive+ " ");
                     } else {
-                        System.out.print(" ");
+                        System.out.print(dead + " ");
                     }
                 }
                 System.out.println();
+
             }
         } finally {
             lock.readLock().unlock();
