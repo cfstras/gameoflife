@@ -45,16 +45,23 @@ public class SwingGUI extends JPanel implements Renderer {
     @Override
     public void init(GameField field) {
         this.field = field;
+        f = new JFrame("GUI: " + name);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //f.setSize(height * 10 + 10, width*10 + 30);
+        
+        setPreferredSize(new Dimension(height * 10, width*10));
         invalidate();
         repaint();
+        
+        f.add(this);
+        f.pack();
+        f.setVisible(true);
     }
     
     @Override
     public void drawField(GameField field) {
-        f = new JFrame("GUI: " + name);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setSize(height * 10 + 10, width*10 + 30);
-        f.add(this);
-        f.setVisible(true);
+        this.field=field;
+        f.invalidate();
+        f.repaint();
     }
 }

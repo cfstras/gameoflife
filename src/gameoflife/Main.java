@@ -12,16 +12,13 @@ public class Main {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        GameField life = new GameField(50, 50, "Leben");
-        life.insertRandomData();
-        SwingGUI gui = new SwingGUI(50,50,"GUI");
-        gui.init(life);
-        gui.drawField(life);
+        //GameField life = new GameField(50, 50, "Leben");
+        //life.insertRandomData();
 
         //GameField life = new GameField(10, 10, "Leben");
         //life.insertRandomData();
         //life.printGameField();
-        //mainLoop();
+        mainLoop();
     }
     
     public static GameField gliderField() {
@@ -46,10 +43,14 @@ public class Main {
         GameField current=gliderField();
         GameField next=new GameField(10,10,"glider2");
         
+        SwingGUI gui = new SwingGUI(10,10,"GUI");
+        gui.init(current);
+        
         while(true) {
             //print
-            System.out.println();System.out.println();System.out.println();System.out.println();
-            current.printGameField();
+            //System.out.println();System.out.println();System.out.println();System.out.println();
+            //current.printGameField();
+            gui.drawField(current);
             
             //generation
             GameOfLife.generation(current, next);
