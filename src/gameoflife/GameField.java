@@ -72,12 +72,12 @@ public class GameField implements Serializable, Cloneable {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     if (aliveCells[x][y]) {
-                        System.out.println("#");
+                        System.out.print("#");
                     } else {
-                        System.out.println(" ");
+                        System.out.print(" ");
                     }
                 }
-                System.out.println("\n");
+                System.out.println();
             }
         } finally {
             lock.readLock().unlock();
