@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameoflife;
 
 /**
@@ -15,5 +11,8 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        GameField life = new GameField(100, 100, "Leben");
+        life.insertRandomData();
+        life.printGameField();
     }
 }

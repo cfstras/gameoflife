@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gameoflife;
 
 /**
@@ -9,5 +5,4 @@ package gameoflife;
  * @author claus
  */
 public class OpenGLRenderer {
-    
 }
