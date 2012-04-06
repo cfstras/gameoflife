@@ -14,8 +14,7 @@ public class GameField implements Serializable, Cloneable {
     int generation;
     String name;
     boolean[][] aliveCells;
-    final ReentrantReadWriteLock lock;
-    Random random = new Random();
+    final Object lock;
     
     char alive = '\u25A0';
     char dead = '\u25A1';
@@ -34,35 +33,29 @@ public class GameField implements Serializable, Cloneable {
     }
 
     public void initField() {
-        lock.writeLock().lock();
-        try {
+        synchronized(lock) {
             aliveCells = new boolean[width][height];
-        } finally {
-            lock.writeLock().unlock();
         }
     }
 
     public boolean useDataFrom(GameField template) {
 
         if (template != null) {
-            lock.writeLock().lock();
-            try {
-                template.lock.readLock().lock();
-                int minWidth = width;
-                int minHeight = height;
-                if (template.width < width) {
-                    minWidth = template.width;
+            synchronized(lock) {
+                synchronized(template.lock){
+                    int minWidth = width;
+                    int minHeight = height;
+                    if (template.width < width) {
+                        minWidth = template.width;
+                    }
+                    if (template.height > height) {
+                        minWidth = template.height;
+                    }
+                    for (int ix = 0; ix < minWidth; ix++) {
+                        System.arraycopy(template.aliveCells[ix], 0, aliveCells[ix], 0, minHeight);
+                    }
                 }
-                if (template.height > height) {
-                    minWidth = template.height;
-                }
-                for (int ix = 0; ix < minWidth; ix++) {
-                    System.arraycopy(template.aliveCells[ix], 0, aliveCells[ix], 0, minHeight);
-                }
-            } finally {
-                lock.writeLock().unlock();
             }
-            template.lock.readLock().unlock();
             return true;
         } else {
             return false;
@@ -70,8 +63,7 @@ public class GameField implements Serializable, Cloneable {
     }
 
     public void printGameField() {
-        lock.readLock().lock();
-        try {
+        synchronized(lock){
             System.out.println("Printing " + name + " to System.out");
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
@@ -84,21 +76,8 @@ public class GameField implements Serializable, Cloneable {
                 System.out.println();
 
             }
-        } finally {
-            lock.readLock().unlock();
         }
     }
 
-    public void insertRandomData() {
-        lock.writeLock().lock();
-        try {
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    aliveCells[x][y] = random.nextBoolean();
-                }
-            }
-        } finally {
-            lock.writeLock().unlock();
-        }
-    }
+    
 }

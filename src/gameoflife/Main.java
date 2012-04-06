@@ -1,17 +1,24 @@
 package gameoflife;
 
 import static gameoflife.Tools.*;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 /**
  *
  * @author claus
  */
 public class Main {
-
+    
+    public static boolean running=false;
+    public static boolean run=true;
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
 
         //GameField life = new GameField(50, 50, "Leben");
         //life.insertRandomData();
@@ -41,32 +48,50 @@ public class Main {
         return f;
     }
     
+    static GameField current;
+    static GameField next;
+    static SwingGUI gui;
+    static GameOfLife gol;
+    static Random random=new Random();
     public static void mainLoop() {
-        GameField current= new GameField(50, 50, "Random1");//gliderField();
-        GameField next=new GameField(50,50,"Random2");
-        current.insertRandomData();
-        SwingGUI gui = new SwingGUI(50,50,"GUI");
-        gui.init(current);
-        
-        while(true) {
-            //print
-            //System.out.println();System.out.println();System.out.println();System.out.println();
-            //current.printGameField();
-            gui.drawField(current);
-            
-            //generation
-            GameOfLife.generation(current, next);
-            //swap buffers
-            GameField temp=current;
-            current=next;
-            next=temp;
-            
-            try {
-                //wait
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {}
+        current= new GameField(50, 50, "Random1");//gliderField();
+        next=new GameField(50,50,"Random2");
+        try {
+            //l&f
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        gui = new SwingGUI(50,50,"GUI");
+        gui.init(current);
+        
+        gol = new GameOfLife();
+        gol.currentField=next;
+        gol.nextField=current;
+        gol.randomField();
+        gol.start();
+    }
+    
+    public static void loop() {
+        //current.printGameField();
+        
+        //generation
+        gol.generation(current, next);
+        //swap buffers
+        GameField temp=current;
+        current=next;
+        next=temp;
+        
+        gui.controlGUI.genpp();
+        gui.drawField(current);
+            
     }
     
     public static void test() {
@@ -77,6 +102,10 @@ public class Main {
         System.out.println("x="+x+" y="+y);
         
         
+    }
+
+    static void redraw() {
+        gui.drawField(current);
     }
     
 }
